@@ -100,9 +100,13 @@ class ClosedLoop:
         self.plant.reset_state()
 
         for t in range(T):
+            # Gets current position, depth and reference for that time step 
             positions[t] = self.plant.get_position()
             observation_t = self.plant.get_depth()
-            # Call your controller here
+            reference_t = mission.reference[t]
+
+            # Call your controller here - ask noah 
+            actions[t] = self.controller(observation_t, reference_t)
             self.plant.transition(actions[t], disturbances[t])
 
         return Trajectory(positions)
