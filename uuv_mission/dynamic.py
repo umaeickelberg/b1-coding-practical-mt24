@@ -76,12 +76,11 @@ class Mission:
 
     @classmethod
     def from_csv(cls, file_name: str):
-        data = pd.read_csv("mission.csv")
+        data = pd.read_csv(file_name)
         reference = data['reference'].to_numpy()
         cave_height = data['cave_height'].to_numpy()
         cave_depth = data['cave_depth'].to_numpy()
         return cls(reference, cave_height, cave_depth)
-        pass
 
 
 class ClosedLoop:
@@ -105,8 +104,10 @@ class ClosedLoop:
             observation_t = self.plant.get_depth()
             reference_t = mission.reference[t]
 
-            # Call your controller here - ask noah 
+            # Call your controller here - ask noah for controller set up 
             actions[t] = self.controller(observation_t, reference_t)
+
+            # Update the submarine's state
             self.plant.transition(actions[t], disturbances[t])
 
         return Trajectory(positions)
