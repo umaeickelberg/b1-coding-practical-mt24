@@ -104,7 +104,7 @@ class ClosedLoop:
             observation_t = self.plant.get_depth()
             reference_t = mission.reference[t]
 
-            # Call your controller here - ask noah for controller set up 
+            # Call your controller here 
             actions[t] = self.controller(observation_t, reference_t)
 
             # Update the submarine's state
